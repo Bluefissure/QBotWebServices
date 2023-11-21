@@ -1,12 +1,13 @@
 import re
-import httpx
-from fastapi import APIRouter, Request
-from fastapi.responses import RedirectResponse, Response, HTMLResponse
-from app.utils.common import get_settings
 from urllib.parse import unquote
+import httpx
+from fastapi import APIRouter
+from fastapi.responses import RedirectResponse, Response, StreamingResponse
+from app.utils.common import get_settings
 
 settings = get_settings()
 router = APIRouter()
+
 
 @router.get("/redirect")
 async def redirect(url: str):
@@ -15,12 +16,12 @@ async def redirect(url: str):
         return Response(status_code=403)
     return RedirectResponse(clean_url)
 
+
 @router.get("/image")
-async def image(request: Request, url: str):
+async def image(url: str):
     clean_url = unquote(url)
     if not any([re.match(pattern, clean_url) for pattern in settings.allowed_urls]):
         return Response(status_code=403)
     async with httpx.AsyncClient() as client:
-        response = await client.get(clean_url)
-    print(response.status_code)
-    return HTMLResponse(content=response.text, status_code=response.status_code)
+        response = await client.get(url)
+    return StreamingResponse(response.iter_bytes(), media_type=response.headers['Content-Type'])
