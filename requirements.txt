@@ -1,0 +1,4 @@
+python-dotenv==1.0.0
+fastapi[all]==0.104.1
+
+gunicorn
