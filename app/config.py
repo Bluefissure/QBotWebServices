@@ -9,6 +9,7 @@ class Settings(BaseSettings):
         os.path.dirname(os.path.abspath(__file__)))
     file_cache_dir: str = "cache"
     allowed_urls: list = []
+    api_tokens: list = []
     model_config = SettingsConfigDict(env_file=os.path.join(
         root_path, ".env"), env_file_encoding='utf-8')
 
