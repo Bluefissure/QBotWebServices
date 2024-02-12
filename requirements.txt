@@ -1,4 +1,5 @@
 python-dotenv==1.0.0
 fastapi[all]==0.109.1
+pillow==10.2.0
 
 gunicorn
