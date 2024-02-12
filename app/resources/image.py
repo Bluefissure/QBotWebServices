@@ -15,7 +15,7 @@ from ..config import Settings
 
 router = APIRouter()
 
-@router.get("/")
+@router.get("")
 async def image(
         url: str = None,
         file: str = None,
@@ -45,7 +45,7 @@ class B64Image(BaseModel):
     base64: str
     
 
-@router.post("/")
+@router.post("")
 async def post_image(
         image: B64Image,
         token: str = Depends(get_token),

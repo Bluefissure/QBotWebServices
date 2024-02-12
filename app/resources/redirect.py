@@ -9,7 +9,7 @@ settings = get_settings()
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("")
 async def redirect(url: str):
     clean_url = unquote(url)
     if not any([re.match(pattern, clean_url) for pattern in settings.allowed_urls]):
