@@ -15,12 +15,11 @@ from ..config import Settings
 
 router = APIRouter()
 
-@router.get("")
+@router.get("", response_class=Response)
 async def image(
         url: str = None,
         file: str = None,
         settings: Settings = Depends(get_settings),
-        response_class=Response,
     ):
     if url:
         clean_url = unquote(url)
